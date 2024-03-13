@@ -1,6 +1,4 @@
-class GetCheapestSailing
-  include Dry::Monads[:result]
-
+class Criteria::GetFastestSailing
   attr_reader :sailings, :origin_port, :destination_port
 
   def initialize(origin_port:, destination_port:, sailings:)
@@ -10,21 +8,24 @@ class GetCheapestSailing
   end
 
   def call
-    return Failure("Invalid origin/destination port") unless within_valid_endpoints?
-
-    cheapest_indirect_sailing = indirect_sailings.min_by do |pair|
-      pair.sum(&:rate_in_euro)
-    end
-    cheapest_sailing = direct_sailings.min_by(&:rate_in_euro)
-
-    if cheapest_indirect_sailing
-      cheapest_sailing = cheapest_indirect_sailing unless cheapest_sailing.rate_in_euro < cheapest_indirect_sailing.sum(&:rate_in_euro)
-    end
-
-    Success(cheapest_sailing)
+    fastest_sailing
   end
 
   private
+
+  def fastest_sailing
+    fastest_indirect_sailing = indirect_sailings.min_by do |first_leg, second_leg|
+      (second_leg.arrival_date.to_date - first_leg.departure_date.to_date).to_i
+    end
+
+    fastest_sailing = direct_sailings.min_by(&:days_for_arrival)
+
+    if fastest_indirect_sailing
+      fastest_sailing = fastest_indirect_sailing unless fastest_sailing.days_for_arrival < (fastest_indirect_sailing[1].arrival_date.to_date - fastest_indirect_sailing[0].departure_date.to_date).to_i
+    end
+
+    fastest_sailing
+  end
 
   def within_valid_endpoints?
     valid_endpoints.include?(origin_port) && valid_endpoints.include?(destination_port)

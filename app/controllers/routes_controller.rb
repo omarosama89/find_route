@@ -1,7 +1,7 @@
 class RoutesController < ApplicationController
   def index
-    result = GetCheapestSailing.new(
-      origin_port: origin_port, destination_port: destination_port, sailings: sailings
+    result = GetSailings.new(
+      origin_port: origin_port, destination_port: destination_port, sailings: sailings, criteria: criteria
     ).call
 
     if result.success?
@@ -23,5 +23,9 @@ class RoutesController < ApplicationController
 
   def sailings
     SailingsBuilder.new.call
+  end
+
+  def criteria
+    params[:criteria] || 'cheapest'
   end
 end

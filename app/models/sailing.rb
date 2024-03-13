@@ -12,6 +12,10 @@ class Sailing
     (rate.to_f / (exchange_rates[rate_currency.downcase.to_sym] || 1)).round(2)
   end
 
+  def days_for_arrival
+    (arrival_date.to_date - departure_date.to_date).to_i
+  end
+
   def to_json
     {
       "origin_port": origin_port,
