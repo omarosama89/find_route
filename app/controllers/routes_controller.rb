@@ -1,6 +1,6 @@
 class RoutesController < ApplicationController
   def index
-    result = GetCheapestEndpoint.new(
+    result = GetCheapestSailing.new(
       origin_port: origin_port, destination_port: destination_port, sailings: sailings
     ).call
 

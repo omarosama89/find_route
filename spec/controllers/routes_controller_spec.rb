@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe RoutesController do
   before do
-    service = allow(GetCheapestEndpoint)
+    allow(GetCheapestSailing)
       .to(receive(:new).with(origin_port: origin_port, destination_port: destination_port, sailings: anything))
       .and_return(result)
-    # allow(service).to receive(:call).and_return(double(success?: true))
   end
 
   describe "GET index" do
