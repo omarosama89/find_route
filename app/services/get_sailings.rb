@@ -20,8 +20,15 @@ class GetSailings
 
     return Failure("Invalid criteria!") unless valid_criteria.include?(criteria.to_sym)
 
+
+    route_information = RouteInformation.new(
+      origin_port: origin_port,
+      destination_port: destination_port,
+      sailings: sailings
+    )
+
     sailing = CRITERIA[criteria.to_sym].constantize.new(
-      origin_port: origin_port, destination_port: destination_port, sailings: sailings
+      route_information: route_information
     ).call
 
     Success(sailing)

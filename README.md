@@ -16,8 +16,8 @@ Now you can visit `localhost:3000/routes` with mandatory params `origin_port` & 
 - `origin_port` & `destination_port` can be `CNSHA`, `NLRTM`, `ESBCN` or `BRSSZ`
 - `criteria` can be `cheapest` or `fastest`
 
-### Usage
-#### Cheapest
+## Usage
+### Cheapest
 For example using CNSHA as origin port & NLRTM as destination port, with cheapest criteria
 `localhost:3000/routes?origin_port=CNSHA&destination_port=NLRTM&criteria=cheapest`
 ```
@@ -47,7 +47,7 @@ For example using CNSHA as origin port & NLRTM as destination port, with cheapes
 ]
 ```
 
-#### Fastest
+### Fastest
 For example using CNSHA as origin port & NLRTM as destination port, with fastest criteria
 `localhost:3000/routes?origin_port=CNSHA&destination_port=NLRTM&criteria=fastest`
 ```

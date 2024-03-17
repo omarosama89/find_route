@@ -2,9 +2,10 @@ require 'rails_helper'
 
 describe Criteria::GetCheapestSailing do
   subject do
-    described_class.new(origin_port: origin_port, destination_port: destination_port, sailings: sailings)
+    described_class.new(route_information: route_information)
   end
 
+  let(:route_information) { RouteInformation.new(origin_port: origin_port, destination_port: destination_port, sailings: sailings) }
   let(:origin_port) { 'CNSHA' }
   let(:destination_port) { 'NLRTM' }
 
