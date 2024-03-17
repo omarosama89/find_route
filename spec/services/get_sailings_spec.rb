@@ -49,13 +49,18 @@ describe GetSailings do
   let(:fastest_sailing_result) { fastest_sailing }
   let(:origin_port) { 'CNSHA' }
   let(:destination_port) { 'NLRTM' }
+  let(:route_information) { RouteInformation.new(origin_port: origin_port, destination_port: destination_port, sailings: sailings) }
 
   before do
+    allow(RouteInformation)
+      .to(receive(:new).with(
+        origin_port: origin_port, destination_port: destination_port, sailings: sailings
+      )).and_return(instance_double('RouteInformation'))
     allow(Criteria::GetCheapestSailing)
-      .to(receive(:new).with(origin_port: origin_port, destination_port: destination_port, sailings: sailings))
+      .to(receive(:new).with(route_information: route_information))
       .and_return(instance_double('Criteria::GetCheapestSailing', call: cheapest_sailing_result))
     allow(Criteria::GetFastestSailing)
-      .to(receive(:new).with(origin_port: origin_port, destination_port: destination_port, sailings: sailings))
+      .to(receive(:new).with(route_information: route_information))
       .and_return(instance_double('Criteria::GetFastestSailing', call: fastest_sailing_result))
   end
 
